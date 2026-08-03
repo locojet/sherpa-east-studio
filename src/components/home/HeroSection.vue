@@ -111,20 +111,14 @@ function resetPointerEffect() {
           <div v-else class="hero__video-placeholder"></div>
         </div>
         <div class="hero__floor-light" aria-hidden="true"></div>
-        <div class="hero__logo" :class="{ 'hero__logo--docked': ui.isHeaderCompact }">
-          <BrandLogo />
-        </div>
         <div
-          class="hero__mobile-mark"
-          :class="{ 'hero__mobile-mark--docked': ui.isHeaderCompact }"
+          class="hero__mark"
+          :class="{ 'hero__mark--docked': ui.isHeaderCompact }"
           aria-hidden="true"
         >
           <BrandLogo mark-only />
         </div>
-        <div
-          class="hero__mobile-wordmark"
-          :class="{ 'hero__mobile-wordmark--docked': ui.isHeaderCompact }"
-        >
+        <div class="hero__wordmark" :class="{ 'hero__wordmark--docked': ui.isHeaderCompact }">
           <BrandLogo text-only />
         </div>
       </div>
@@ -333,28 +327,69 @@ function resetPointerEffect() {
   transform-origin: center bottom;
 }
 
-.hero__logo {
-  position: relative;
+.hero__mark {
+  position: absolute;
+  top: var(--hero-video-top);
+  left: 50%;
   z-index: 3;
+  display: grid;
+  width: var(--hero-video-width);
+  height: var(--hero-video-height);
+  place-items: center;
+  pointer-events: none;
   opacity: 1;
-  transform-origin: center;
-  transform: translate3d(var(--logo-shift-x), var(--logo-shift-y), 70px);
+  transform: translate3d(-50%, -6px, 70px);
   transition:
     opacity 320ms var(--ease-out),
     transform 420ms var(--ease-out);
 }
 
-.hero__logo :deep(.brand-logo__image) {
-  width: min(380px, 72vw);
-  max-width: none;
-  height: auto;
-  filter: drop-shadow(0 20px 34px rgba(0, 0, 0, 0.72))
-    drop-shadow(0 0 26px rgba(241, 215, 141, 0.26));
+.hero__mark :deep(.brand-logo--mark-only) {
+  width: min(360px, 46vw);
+  height: min(198px, 25.4vw);
 }
 
-.hero__mobile-mark,
-.hero__mobile-wordmark {
-  display: none;
+.hero__mark :deep(.brand-logo__image) {
+  filter: drop-shadow(0 22px 34px rgba(0, 0, 0, 0.66))
+    drop-shadow(0 0 28px rgba(241, 215, 141, 0.22));
+}
+
+.hero__wordmark {
+  position: absolute;
+  top: calc(var(--hero-video-top) + var(--hero-video-height) + clamp(0.75rem, 1.4vw, 1.1rem));
+  left: 50%;
+  z-index: 3;
+  display: inline-flex;
+  justify-content: center;
+  max-width: min(420px, calc(100vw - 48px));
+  opacity: 1;
+  text-align: center;
+  transform: translateX(-50%);
+  transition:
+    opacity 320ms var(--ease-out),
+    transform 420ms var(--ease-out);
+}
+
+.hero__wordmark :deep(.brand-logo__fallback) {
+  align-items: center;
+  color: var(--color-gold-bright);
+  font-family: var(--font-display);
+  text-align: center;
+  filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.68));
+}
+
+.hero__wordmark :deep(.brand-logo__fallback span) {
+  font-size: clamp(1.18rem, 2.1vw, 1.58rem);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  white-space: nowrap;
+}
+
+.hero__wordmark :deep(.brand-logo__fallback small) {
+  color: var(--color-muted);
+  font-size: clamp(0.54rem, 0.9vw, 0.68rem);
+  letter-spacing: 0.42em;
+  white-space: nowrap;
 }
 
 .hero__copy {
@@ -540,86 +575,34 @@ function resetPointerEffect() {
     margin-inline: auto;
   }
 
-  .hero__logo {
-    display: none;
-  }
-
-  .hero__mobile-mark {
-    position: absolute;
-    top: var(--hero-video-top);
-    left: 50%;
-    display: grid;
-    width: var(--hero-video-width);
-    height: var(--hero-video-height);
-    place-items: center;
-    pointer-events: none;
-    z-index: 3;
-    opacity: 1;
+  .hero__mark {
     transform: translate3d(-50%, -4px, 70px);
-    transition:
-      opacity 320ms var(--ease-out),
-      transform 420ms var(--ease-out);
   }
 
-  .hero__mobile-mark :deep(.brand-logo--mark-only) {
+  .hero__mark :deep(.brand-logo--mark-only) {
     width: min(250px, 58vw);
     height: min(138px, 32vw);
   }
 
-  .hero__mobile-mark :deep(.brand-logo__image) {
-    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.64))
-      drop-shadow(0 0 24px rgba(241, 215, 141, 0.22));
-  }
-
-  .hero__mobile-wordmark {
-    position: absolute;
-    top: calc(var(--hero-video-top) + var(--hero-video-height) + clamp(0.5rem, 2vw, 0.8rem));
-    left: 50%;
-    z-index: 3;
-    display: inline-flex;
-    justify-content: center;
-    max-width: min(360px, calc(100vw - 48px));
-    opacity: 1;
-    text-align: center;
-    transform: translateX(-50%);
-    transition:
-      opacity 320ms var(--ease-out),
-      transform 420ms var(--ease-out);
-  }
-
-  .hero__mobile-wordmark :deep(.brand-logo__fallback) {
-    align-items: center;
-    color: var(--color-gold-bright);
-    font-family: var(--font-display);
-    text-align: center;
-    filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.68));
-  }
-
-  .hero__mobile-wordmark :deep(.brand-logo__fallback span) {
+  .hero__wordmark :deep(.brand-logo__fallback span) {
     font-size: clamp(1.02rem, 5vw, 1.36rem);
-    font-weight: 800;
-    letter-spacing: 0.18em;
-    white-space: nowrap;
   }
 
-  .hero__mobile-wordmark :deep(.brand-logo__fallback small) {
-    color: var(--color-muted);
+  .hero__wordmark :deep(.brand-logo__fallback small) {
     font-size: clamp(0.52rem, 2.4vw, 0.62rem);
-    letter-spacing: 0.42em;
-    white-space: nowrap;
   }
 
-  .hero__mobile-mark--docked,
-  .hero__mobile-wordmark--docked {
+  .hero__mark--docked,
+  .hero__wordmark--docked {
     opacity: 0;
     pointer-events: none;
   }
 
-  .hero__mobile-mark--docked {
+  .hero__mark--docked {
     transform: translate3d(-50%, -32px, 70px) scale(0.72);
   }
 
-  .hero__mobile-wordmark--docked {
+  .hero__wordmark--docked {
     transform: translate(-50%, -28px) scale(0.86);
   }
 }
@@ -631,7 +614,7 @@ function resetPointerEffect() {
     min-height: clamp(300px, 84vw, 400px);
   }
 
-  .hero__mobile-mark :deep(.brand-logo--mark-only) {
+  .hero__mark :deep(.brand-logo--mark-only) {
     width: min(220px, 56vw);
     height: min(122px, 31vw);
   }
