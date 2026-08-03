@@ -9,12 +9,14 @@ const props = withDefaults(
     compact?: boolean
     textOnly?: boolean
     markOnly?: boolean
+    showStudio?: boolean
   }>(),
   {
     variant: 'gold',
     compact: false,
     textOnly: false,
     markOnly: false,
+    showStudio: true,
   },
 )
 
@@ -44,6 +46,8 @@ const altText = computed(() =>
       : 'Sherpa East Studio Logo in Gold',
 )
 
+const fallbackLabel = computed(() => (props.showStudio ? 'Sherpa East Studio' : 'Sherpa East'))
+
 watch([() => props.variant, () => props.markOnly], () => {
   imageFailed.value = false
 })
@@ -68,9 +72,9 @@ watch([() => props.variant, () => props.markOnly], () => {
       :alt="altText"
       @error="imageFailed = true"
     />
-    <span v-else class="brand-logo__fallback" aria-label="Sherpa East Studio">
+    <span v-else class="brand-logo__fallback" :aria-label="fallbackLabel">
       <span>Sherpa East</span>
-      <small>Studio</small>
+      <small v-if="showStudio">Studio</small>
     </span>
   </span>
 </template>

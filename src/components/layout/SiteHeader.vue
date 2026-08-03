@@ -42,7 +42,7 @@ watch(
       :to="{ path: '/', hash: '#inicio' }"
       aria-label="Zum Start"
     >
-      <BrandLogo compact text-only />
+      <BrandLogo compact text-only :show-studio="false" />
     </RouterLink>
 
     <RouterLink
@@ -60,7 +60,7 @@ watch(
       aria-label="Zum Start"
       @click="ui.closeMenu"
     >
-      <BrandLogo compact text-only />
+      <BrandLogo compact text-only :show-studio="false" />
     </RouterLink>
 
     <nav class="site-header__nav" aria-label="Hauptnavigation">
