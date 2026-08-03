@@ -114,6 +114,19 @@ function resetPointerEffect() {
         <div class="hero__logo" :class="{ 'hero__logo--docked': ui.isHeaderCompact }">
           <BrandLogo />
         </div>
+        <div
+          class="hero__mobile-mark"
+          :class="{ 'hero__mobile-mark--docked': ui.isHeaderCompact }"
+          aria-hidden="true"
+        >
+          <BrandLogo mark-only />
+        </div>
+        <div
+          class="hero__mobile-wordmark"
+          :class="{ 'hero__mobile-wordmark--docked': ui.isHeaderCompact }"
+        >
+          <BrandLogo text-only />
+        </div>
       </div>
       <p class="eyebrow" data-reveal>Tonstudio / Berlin Höhenlage</p>
       <h1 class="display-title" data-reveal>Klang mit Höhe, Tiefe und Charakter</h1>
@@ -339,6 +352,11 @@ function resetPointerEffect() {
     drop-shadow(0 0 26px rgba(241, 215, 141, 0.26));
 }
 
+.hero__mobile-mark,
+.hero__mobile-wordmark {
+  display: none;
+}
+
 .hero__copy {
   max-width: 560px;
   margin: clamp(1rem, 2vw, 1.4rem) 0 0;
@@ -523,6 +541,10 @@ function resetPointerEffect() {
   }
 
   .hero__logo {
+    display: none;
+  }
+
+  .hero__mobile-mark {
     position: absolute;
     top: var(--hero-video-top);
     left: 50%;
@@ -531,16 +553,74 @@ function resetPointerEffect() {
     height: var(--hero-video-height);
     place-items: center;
     pointer-events: none;
-    transform: translate3d(-50%, 0, 70px);
+    z-index: 3;
+    opacity: 1;
+    transform: translate3d(-50%, -4px, 70px);
+    transition:
+      opacity 320ms var(--ease-out),
+      transform 420ms var(--ease-out);
   }
 
-  .hero__logo :deep(.brand-logo__image) {
-    width: min(320px, 66vw);
+  .hero__mobile-mark :deep(.brand-logo--mark-only) {
+    width: min(250px, 58vw);
+    height: min(138px, 32vw);
   }
 
-  .hero__logo--docked {
+  .hero__mobile-mark :deep(.brand-logo__image) {
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.64))
+      drop-shadow(0 0 24px rgba(241, 215, 141, 0.22));
+  }
+
+  .hero__mobile-wordmark {
+    position: absolute;
+    top: calc(var(--hero-video-top) + var(--hero-video-height) + clamp(0.5rem, 2vw, 0.8rem));
+    left: 50%;
+    z-index: 3;
+    display: inline-flex;
+    justify-content: center;
+    max-width: min(360px, calc(100vw - 48px));
+    opacity: 1;
+    text-align: center;
+    transform: translateX(-50%);
+    transition:
+      opacity 320ms var(--ease-out),
+      transform 420ms var(--ease-out);
+  }
+
+  .hero__mobile-wordmark :deep(.brand-logo__fallback) {
+    align-items: center;
+    color: var(--color-gold-bright);
+    font-family: var(--font-display);
+    text-align: center;
+    filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.68));
+  }
+
+  .hero__mobile-wordmark :deep(.brand-logo__fallback span) {
+    font-size: clamp(1.02rem, 5vw, 1.36rem);
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    white-space: nowrap;
+  }
+
+  .hero__mobile-wordmark :deep(.brand-logo__fallback small) {
+    color: var(--color-muted);
+    font-size: clamp(0.52rem, 2.4vw, 0.62rem);
+    letter-spacing: 0.42em;
+    white-space: nowrap;
+  }
+
+  .hero__mobile-mark--docked,
+  .hero__mobile-wordmark--docked {
     opacity: 0;
+    pointer-events: none;
+  }
+
+  .hero__mobile-mark--docked {
     transform: translate3d(-50%, -32px, 70px) scale(0.72);
+  }
+
+  .hero__mobile-wordmark--docked {
+    transform: translate(-50%, -28px) scale(0.86);
   }
 }
 
@@ -551,8 +631,9 @@ function resetPointerEffect() {
     min-height: clamp(300px, 84vw, 400px);
   }
 
-  .hero__logo :deep(.brand-logo__image) {
-    width: min(280px, 68vw);
+  .hero__mobile-mark :deep(.brand-logo--mark-only) {
+    width: min(220px, 56vw);
+    height: min(122px, 31vw);
   }
 
   .hero__wave {
