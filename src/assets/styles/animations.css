@@ -1,0 +1,43 @@
+[data-reveal] {
+  transform: translateY(28px);
+  opacity: 0;
+  transition:
+    opacity 720ms var(--ease-out),
+    transform 720ms var(--ease-out);
+}
+
+[data-reveal].is-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+@keyframes softPulse {
+  0%,
+  100% {
+    opacity: 0.58;
+    transform: scaleX(0.92);
+  }
+
+  50% {
+    opacity: 0.95;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes meterRise {
+  0%,
+  100% {
+    transform: scaleY(0.24);
+  }
+
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    transform: none;
+    opacity: 1;
+  }
+}
