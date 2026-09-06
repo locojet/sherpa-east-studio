@@ -2,14 +2,14 @@
   <section class="section section--tight sonic-landscape" aria-labelledby="sonic-landscape-title">
     <div class="container sonic-landscape__grid">
       <div data-reveal>
-        <p class="eyebrow">Frequenz / Höhe</p>
-        <h2 id="sonic-landscape-title">Ein Berg aus Wellen</h2>
+        <p class="eyebrow">Klang / Bild / Haltung</p>
+        <h2 id="sonic-landscape-title">Aus Frequenzen werden Geschichten</h2>
       </div>
 
       <div
         class="sonic-landscape__art"
         data-reveal
-        aria-label="Abstrakter Berg aus Frequenzlinien"
+        aria-label="Abstrakter Berg aus Frequenzlinien für Klang und Film"
         role="img"
       >
         <svg viewBox="0 0 900 360" aria-hidden="true" focusable="false">

@@ -114,8 +114,8 @@ watch(volume, (nextVolume) => {
     <div class="container audio-section__grid">
       <SectionHeading
         eyebrow="Audio"
-        title="Projekte, die man hört, bevor man sie erklärt"
-        copy="Ein eigener Player, vorbereitet für echte Sessions, Master-Versionen und Ausschnitte aus dem Studio."
+        title="Skizzen für Stimme, Album und Film"
+        copy="Erste Klangskizzen zeigen, wie Sherpa East mit Stimme, Atmosphäre und musikalischer Dramaturgie arbeitet."
       />
 
       <div class="audio-player" data-reveal>

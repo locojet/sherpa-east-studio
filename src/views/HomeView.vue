@@ -5,11 +5,13 @@ import SiteHeader from '@/components/layout/SiteHeader.vue'
 import AudioPlayerSection from '@/components/home/AudioPlayerSection.vue'
 import ContactSection from '@/components/home/ContactSection.vue'
 import HeroSection from '@/components/home/HeroSection.vue'
+import InfoSection from '@/components/home/InfoSection.vue'
 import ProjectsGallery from '@/components/home/ProjectsGallery.vue'
 import ServicesSection from '@/components/home/ServicesSection.vue'
 import SonicLandscape from '@/components/home/SonicLandscape.vue'
 import StudioSection from '@/components/home/StudioSection.vue'
 import TeamSection from '@/components/home/TeamSection.vue'
+import TestimonialsSection from '@/components/home/TestimonialsSection.vue'
 
 useRevealOnScroll()
 </script>
@@ -21,10 +23,12 @@ useRevealOnScroll()
       <HeroSection />
       <StudioSection />
       <ServicesSection />
-      <AudioPlayerSection />
       <ProjectsGallery />
+      <AudioPlayerSection />
       <SonicLandscape />
       <TeamSection />
+      <TestimonialsSection />
+      <InfoSection />
       <ContactSection />
     </main>
     <SiteFooter />

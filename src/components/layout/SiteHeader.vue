@@ -39,7 +39,7 @@ watch(
   >
     <RouterLink
       class="site-header__logo"
-      :to="{ path: '/', hash: '#inicio' }"
+      :to="{ path: '/', hash: '#start' }"
       aria-label="Zum Start"
     >
       <BrandLogo compact text-only :show-studio="false" />
@@ -47,7 +47,7 @@ watch(
 
     <RouterLink
       class="site-header__mobile-mark"
-      :to="{ path: '/', hash: '#inicio' }"
+      :to="{ path: '/', hash: '#start' }"
       aria-label="Zum Start"
       @click="ui.closeMenu"
     >
@@ -56,7 +56,7 @@ watch(
 
     <RouterLink
       class="site-header__mobile-wordmark"
-      :to="{ path: '/', hash: '#inicio' }"
+      :to="{ path: '/', hash: '#start' }"
       aria-label="Zum Start"
       @click="ui.closeMenu"
     >

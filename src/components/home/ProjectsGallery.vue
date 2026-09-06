@@ -15,12 +15,12 @@ const activeTrack = computed(() =>
 </script>
 
 <template>
-  <section id="proyectos" class="section projects-section">
+  <section id="projekte" class="section projects-section">
     <div class="container">
       <SectionHeading
         eyebrow="Projekte"
-        title="Ausgewählte Arbeiten mit eigener Textur"
-        copy="Provisorische Inhalte, sauber vom visuellen Code getrennt. Jedes Projekt kann Audio, Bild, Studioleistung und eine Detailansicht verbinden."
+        title="Arbeiten zwischen Klang, Kamera und Charakter"
+        copy="Aus dem Konzept übernommen: Dokumentationen, Albumproduktion, Imagefilm und Lesungen. Einige Projektdetails sind bewusst offen gehalten, bis echtes Bildmaterial und finale Freigaben vorliegen."
       />
 
       <div class="projects-section__grid">
@@ -36,7 +36,7 @@ const activeTrack = computed(() =>
             <span>{{ project.year }} / {{ project.work }}</span>
             <h3>{{ project.title }}</h3>
             <p>{{ project.artist }}</p>
-            <button type="button" @click="activeProject = project">Details ansehen</button>
+            <button type="button" @click="activeProject = project">Projekt ansehen</button>
           </div>
         </article>
       </div>
@@ -70,7 +70,7 @@ const activeTrack = computed(() =>
           <p class="project-modal__artist">{{ activeProject.artist }}</p>
           <p>{{ activeProject.description }}</p>
           <div v-if="activeTrack" class="project-modal__audio">
-            <strong>Ausschnitt verfügbar</strong>
+            <strong>Audio-Skizze verfügbar</strong>
             <span>{{ activeTrack.title }} - {{ activeTrack.artist }}</span>
           </div>
         </article>

@@ -1,14 +1,12 @@
 import type { ContactInfo } from '@/types/content'
 
 export const contactInfo: ContactInfo = {
-  address: 'East Ridge 42, Berlin 10245',
-  email: 'booking@sherpaeast.studio',
-  phone: '+49 30 0000 0000',
-  whatsapp: 'https://wa.me/493000000000',
-  schedule: 'Montag bis Samstag, 10:00 - 21:00 Uhr',
-  mapLabel: 'Platzhalterkarte, vorbereitet für Google Maps oder Mapbox',
+  address: 'Kreuzweidenstraße 61a, 53604 Bad Honnef',
+  email: 'info@sherpaeaststudio.com',
+  schedule: 'Termine nach Vereinbarung',
+  mapLabel: 'Karte für Sherpa East Studio in Bad Honnef',
   socials: [
-    { label: 'Instagram', href: 'https://instagram.com/' },
+    { label: 'Instagram', href: 'https://instagram.com/sherpaeaststudio' },
     { label: 'YouTube', href: 'https://youtube.com/' },
     { label: 'SoundCloud', href: 'https://soundcloud.com/' },
   ],

@@ -4,12 +4,12 @@ import SectionHeading from '@/components/ui/SectionHeading.vue'
 </script>
 
 <template>
-  <section id="equipo" class="section team-section">
+  <section id="kuenstler" class="section team-section">
     <div class="container">
       <SectionHeading
-        eyebrow="Team"
-        title="Menschen, die zuhören, bevor sie den Fader bewegen"
-        copy="Provisorische Profile für das spätere Studioteam mit Foto, Rolle, Kurzbiografie und optionalen Kanälen."
+        eyebrow="Künstler"
+        title="Menschen und Formate im Umfeld von Sherpa East"
+        copy="Der kreative Kern entsteht aus Begleitung: Künstler, Auftritte, Gespräche und Produktionen, die sich über Musik, Film und Bühne weiterentwickeln."
       />
 
       <div class="team-section__grid">
@@ -34,7 +34,7 @@ import SectionHeading from '@/components/ui/SectionHeading.vue'
 
 .team-section__grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1rem;
   margin-top: clamp(2.2rem, 5vw, 4.5rem);
 }
@@ -95,7 +95,13 @@ h3 {
   line-height: 1;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1120px) {
+  .team-section__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
   .team-section__grid {
     grid-template-columns: 1fr;
   }

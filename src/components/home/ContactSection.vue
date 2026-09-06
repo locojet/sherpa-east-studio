@@ -82,27 +82,47 @@ async function submitForm() {
   }
 
   isSubmitting.value = true
-  await new Promise<void>((resolve) => window.setTimeout(resolve, 800))
-  Object.assign(form, initialForm)
+  const body = [
+    `Name: ${form.name}`,
+    `E-Mail: ${form.email}`,
+    form.phone ? `Telefon: ${form.phone}` : '',
+    `Leistung: ${form.service}`,
+    `Zeitfenster: ${form.date}`,
+    `Budget: ${form.budget}`,
+    '',
+    'Nachricht:',
+    form.message,
+  ]
+    .filter(Boolean)
+    .join('\n')
+  const params = new URLSearchParams({
+    subject: `Projektanfrage von ${form.name}`,
+    body,
+  })
+
+  window.location.href = `mailto:${contactInfo.email}?${params.toString()}`
+  await new Promise<void>((resolve) => window.setTimeout(resolve, 300))
   isSubmitting.value = false
   status.value = 'success'
 }
 </script>
 
 <template>
-  <section id="contacto" class="section contact-section">
+  <section id="kontakt" class="section contact-section">
     <div class="container contact-section__grid">
       <div class="contact-section__info">
         <SectionHeading
           eyebrow="Kontakt und Buchung"
-          title="Erzähl uns, wohin dein Klang gehen soll"
-          copy="Das Formular ist vorbereitet, um später an eine API angebunden zu werden. Aktuell validiert es Eingaben, zeigt Statusmeldungen und simuliert die Anfrage."
+          title="Erzähl uns, welche Geschichte entstehen soll"
+          copy="Am besten erreichst du Sherpa East über das Formular oder direkt per E-Mail. Beschreibe kurz Projekt, Zeitraum und Ziel der Produktion."
         />
 
         <div class="contact-section__details" data-reveal>
           <address>
             <a :href="`mailto:${contactInfo.email}`">{{ contactInfo.email }}</a>
-            <a :href="`tel:${contactInfo.phone.replace(/\s/g, '')}`">{{ contactInfo.phone }}</a>
+            <a v-if="contactInfo.phone" :href="`tel:${contactInfo.phone.replace(/\s/g, '')}`">
+              {{ contactInfo.phone }}
+            </a>
             <span>{{ contactInfo.address }}</span>
             <span>{{ contactInfo.schedule }}</span>
           </address>
@@ -111,11 +131,13 @@ async function submitForm() {
               {{ social.label }}
             </a>
           </div>
-          <BaseButton :href="contactInfo.whatsapp" variant="secondary">WhatsApp</BaseButton>
+          <BaseButton v-if="contactInfo.whatsapp" :href="contactInfo.whatsapp" variant="secondary">
+            WhatsApp
+          </BaseButton>
         </div>
 
         <div class="contact-section__map" role="img" :aria-label="contactInfo.mapLabel" data-reveal>
-          <span>Karte vorbereitet</span>
+          <span>Bad Honnef</span>
         </div>
       </div>
 
@@ -199,11 +221,11 @@ async function submitForm() {
         </label>
 
         <BaseButton type="submit" :variant="isSubmitting ? 'secondary' : 'primary'">
-          {{ isSubmitting ? 'Wird gesendet...' : 'Anfrage senden' }}
+          {{ isSubmitting ? 'Wird vorbereitet...' : 'Anfrage vorbereiten' }}
         </BaseButton>
 
         <p v-if="status === 'success'" class="booking-form__success" role="status">
-          Anfrage gesendet. Wir melden uns mit dem nächsten passenden Zeitfenster.
+          E-Mail-Entwurf geöffnet. Bitte sende die Nachricht in deinem Mailprogramm ab.
         </p>
         <p v-if="status === 'error'" class="booking-form__error" role="alert">
           Bitte prüfe die markierten Felder vor dem Senden.

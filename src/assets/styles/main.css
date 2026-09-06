@@ -11,6 +11,10 @@
   scroll-margin-top: var(--header-height);
 }
 
+[id] {
+  scroll-margin-top: calc(var(--header-height) + 24px);
+}
+
 .section--tight {
   padding-block: clamp(64px, 8vw, 104px);
 }

@@ -11,6 +11,14 @@ export interface ServiceItem {
   icon: string
 }
 
+export interface PackageItem {
+  id: string
+  title: string
+  scope: string
+  priceNote: string
+  features: string[]
+}
+
 export interface TrackItem {
   id: string
   title: string
@@ -42,6 +50,26 @@ export interface TeamMember {
   social?: string
 }
 
+export interface TestimonialItem {
+  id: string
+  name: string
+  role: string
+  quote: string
+}
+
+export interface NewsItem {
+  id: string
+  kicker: string
+  title: string
+  copy: string
+}
+
+export interface LegalItem {
+  id: string
+  title: string
+  points: string[]
+}
+
 export interface SocialLink {
   label: string
   href: string
@@ -50,8 +78,8 @@ export interface SocialLink {
 export interface ContactInfo {
   address: string
   email: string
-  phone: string
-  whatsapp: string
+  phone?: string
+  whatsapp?: string
   schedule: string
   mapLabel: string
   socials: SocialLink[]

@@ -69,7 +69,7 @@ function resetPointerEffect() {
 
 <template>
   <section
-    id="inicio"
+    id="start"
     class="hero"
     :style="heroStyle"
     @pointermove="handlePointerMove"
@@ -122,15 +122,16 @@ function resetPointerEffect() {
           <BrandLogo text-only />
         </div>
       </div>
-      <p class="eyebrow" data-reveal>Tonstudio / Berlin Höhenlage</p>
-      <h1 class="display-title" data-reveal>Klang mit Höhe, Tiefe und Charakter</h1>
+      <p class="eyebrow" data-reveal>Beyond the Ordinary</p>
+      <h1 class="display-title" data-reveal>Geschichten, die bleiben</h1>
       <p class="hero__copy" data-reveal>
-        Aufnahme, Produktion und Klangerlebnisse für Künstler, Marken und bewegte Bilder.
+        Musikproduktion, Dokumentarfilm und Markenfilme für Künstler, Unternehmen und Menschen mit
+        einer echten Geschichte.
       </p>
       <div class="hero__actions" data-reveal>
-        <BaseButton :to="{ path: '/', hash: '#studio' }">Studio entdecken</BaseButton>
-        <BaseButton :to="{ path: '/', hash: '#proyectos' }" variant="secondary">
-          Projekte anhören
+        <BaseButton :to="{ path: '/', hash: '#kontakt' }">Projekt anfragen</BaseButton>
+        <BaseButton :to="{ path: '/', hash: '#projekte' }" variant="secondary">
+          Arbeiten ansehen
         </BaseButton>
       </div>
       <div class="hero__wave" aria-hidden="true" data-reveal>

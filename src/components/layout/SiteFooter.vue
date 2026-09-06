@@ -7,6 +7,7 @@ import BrandLogo from '@/components/ui/BrandLogo.vue'
 
 const year = new Date().getFullYear()
 const mainServices = services.slice(0, 5)
+const instagram = contactInfo.socials.find((social) => social.label === 'Instagram')
 </script>
 
 <template>
@@ -14,7 +15,7 @@ const mainServices = services.slice(0, 5)
     <div class="container site-footer__grid">
       <div class="site-footer__brand">
         <BrandLogo />
-        <p>Aufnahme, Produktion und Klangerlebnisse mit Höhe, Dunkelheit und analoger Wärme.</p>
+        <p>Musikproduktion, Dokumentarfilm und Markenfilme für Geschichten, die bleiben.</p>
       </div>
 
       <nav aria-label="Footer-Navigation">
@@ -33,7 +34,7 @@ const mainServices = services.slice(0, 5)
         <RouterLink
           v-for="service in mainServices"
           :key="service.id"
-          :to="{ path: '/', hash: '#servicios' }"
+          :to="{ path: '/', hash: '#leistungen' }"
         >
           {{ service.title }}
         </RouterLink>
@@ -42,7 +43,9 @@ const mainServices = services.slice(0, 5)
       <address>
         <h2>Kontakt</h2>
         <a :href="`mailto:${contactInfo.email}`">{{ contactInfo.email }}</a>
-        <a :href="`tel:${contactInfo.phone.replace(/\s/g, '')}`">{{ contactInfo.phone }}</a>
+        <a v-if="contactInfo.phone" :href="`tel:${contactInfo.phone.replace(/\s/g, '')}`">
+          {{ contactInfo.phone }}
+        </a>
         <span>{{ contactInfo.address }}</span>
         <span>{{ contactInfo.schedule }}</span>
       </address>
@@ -51,8 +54,10 @@ const mainServices = services.slice(0, 5)
     <div class="container site-footer__bottom">
       <span>© {{ year }} Sherpa East Studio. Alle Rechte vorbehalten.</span>
       <div>
-        <a href="#" aria-label="Impressum">Impressum</a>
-        <a href="#" aria-label="Datenschutz">Datenschutz</a>
+        <RouterLink :to="{ path: '/', hash: '#impressum' }">Impressum</RouterLink>
+        <RouterLink :to="{ path: '/', hash: '#agb' }">AGB</RouterLink>
+        <RouterLink :to="{ path: '/', hash: '#faq' }">FAQ</RouterLink>
+        <a v-if="instagram" :href="instagram.href" aria-label="Instagram">Instagram</a>
       </div>
     </div>
   </footer>

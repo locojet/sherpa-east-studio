@@ -2,17 +2,17 @@
 import SectionHeading from '@/components/ui/SectionHeading.vue'
 
 const highlights = [
-  'Professionelle Aufnahme',
-  'Musikproduktion',
-  'Mixing und Mastering',
-  'Live Sessions',
-  'Komposition und Arrangements',
+  'Dokumentationen',
+  'Musikproduktionen',
+  'Markenfilme',
+  'Künstlerbegleitung',
+  'Musik für Bild',
 ]
 
 const stats = [
-  { value: '05', label: 'Räume und kreative Stationen' },
-  { value: '24b', label: 'Workflow für hochauflösende Produktionen' },
-  { value: '01', label: 'Team rund um jedes Projekt' },
+  { value: '01', label: 'Zuhören, bevor Technik ins Spiel kommt' },
+  { value: '02', label: 'Vertrauen als Grundlage jeder Produktion' },
+  { value: '03', label: 'Inszenierung, die authentisch bleibt' },
 ]
 </script>
 
@@ -22,13 +22,19 @@ const stats = [
     <div class="container studio-section__grid">
       <div class="studio-section__copy">
         <SectionHeading
-          eyebrow="Das Studio"
-          title="Der Ort, an dem Ideen Form annehmen"
-          copy="Sherpa East Studio ist ein Raum für Intuitionen, Demos und Performances, die zu eigenständigen Produktionen werden. Wir arbeiten wie ein Expeditionsteam: hörend, fordernd und aufmerksam in jeder Etappe."
+          eyebrow="About Sherpa East Studio"
+          title="Beyond the Ordinary"
+          copy="Sherpa East entstand aus der Überzeugung, dass jede Geschichte eine authentische und hochwertige Inszenierung verdient - ob von einem Künstler, einem Unternehmen oder einem Menschen."
         />
         <blockquote data-reveal>
-          Die Philosophie ist einfach: weniger Lärm um den Künstler, mehr Charakter in der Musik.
+          Für uns beginnt gute Arbeit nicht mit einer Kamera oder einem Mikrofon. Sie beginnt mit
+          Zuhören. Mit Vertrauen.
         </blockquote>
+        <p class="studio-section__body" data-reveal>
+          Wir kennen die Bühne, das Sprechen vor der Kamera und die Verantwortung hinter der Kamera.
+          Diese Perspektiven prägen jede Produktion: Arbeiten, die Menschen berühren, Künstler
+          repräsentieren und Unternehmen eine Identität geben.
+        </p>
         <div class="studio-section__tags" data-reveal>
           <span v-for="highlight in highlights" :key="highlight">{{ highlight }}</span>
         </div>
@@ -38,12 +44,12 @@ const stats = [
         <div
           class="studio-section__image studio-section__image--main"
           role="img"
-          aria-label="Dunkler Studioraum mit analoger Konsole und warmem Licht"
+          aria-label="Dokumentarischer Studioraum mit warmem Licht und Kameraarbeit"
         ></div>
         <div
           class="studio-section__image studio-section__image--side"
           role="img"
-          aria-label="Abstrakte Bergform aus topografischen Linien"
+          aria-label="Abstrakte Bergform aus Frequenzlinien"
         ></div>
       </div>
 
@@ -83,6 +89,13 @@ blockquote {
   font-size: clamp(1.45rem, 3vw, 2.25rem);
   line-height: 1.08;
   border-left: 1px solid var(--color-gold);
+}
+
+.studio-section__body {
+  max-width: 680px;
+  margin: 1.35rem 0 0;
+  color: var(--color-muted);
+  font-size: clamp(1rem, 1.35vw, 1.12rem);
 }
 
 .studio-section__tags {

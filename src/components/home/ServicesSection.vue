@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import { packages } from '@/data/packages'
 import { services } from '@/data/services'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
 </script>
 
 <template>
-  <section id="servicios" class="section services-section">
+  <section id="leistungen" class="section services-section">
     <div class="container">
       <SectionHeading
         eyebrow="Leistungen"
-        title="Eine komplette Kette für Klang mit Charakter"
-        copy="Jedes Angebot ist ein Ausgangspunkt. Der tatsächliche Ablauf richtet sich nach Künstler, Zeitrahmen und der Energie, die ein Projekt braucht."
+        title="Produktion für Musik, Film und Identität"
+        copy="Sherpa East verbindet Aufnahme, Komposition, dokumentarische Arbeit und filmische Markenkommunikation. Jede Leistung wird schriftlich bestätigt und auf den Umfang des Projekts abgestimmt."
       />
 
       <div class="services-section__grid">
@@ -25,10 +26,32 @@ import SectionHeading from '@/components/ui/SectionHeading.vue'
           <h3>{{ service.title }}</h3>
           <p>{{ service.description }}</p>
           <small>{{ service.detail }}</small>
-          <RouterLink :to="{ path: '/', hash: '#contacto' }" aria-label="Leistung anfragen">
+          <RouterLink :to="{ path: '/', hash: '#kontakt' }" aria-label="Leistung anfragen">
             Anfragen
           </RouterLink>
         </article>
+      </div>
+
+      <div class="packages" id="preise">
+        <div class="packages__intro" data-reveal>
+          <p class="eyebrow">Produktpakete & Preise</p>
+          <h3>Klare Module, individuell kalkuliert</h3>
+          <p>
+            Die Preise richten sich nach Umfang, Nutzungsrechten und Produktionsdauer. Bei größeren
+            Projekten kann eine Anzahlung von bis zu 50 Prozent vereinbart werden.
+          </p>
+        </div>
+
+        <div class="packages__grid">
+          <article v-for="item in packages" :key="item.id" class="package-card" data-reveal>
+            <span>{{ item.priceNote }}</span>
+            <h4>{{ item.title }}</h4>
+            <p>{{ item.scope }}</p>
+            <ul>
+              <li v-for="feature in item.features" :key="feature">{{ feature }}</li>
+            </ul>
+          </article>
+        </div>
       </div>
     </div>
   </section>
@@ -135,9 +158,102 @@ a {
   text-transform: uppercase;
 }
 
+.packages {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.75fr) minmax(320px, 1fr);
+  gap: clamp(1.4rem, 4vw, 3rem);
+  align-items: start;
+  margin-top: clamp(3rem, 7vw, 5.5rem);
+}
+
+.packages__intro {
+  position: sticky;
+  top: calc(var(--header-height) + 24px);
+}
+
+.packages__intro h3,
+.package-card h4 {
+  margin: 0;
+  color: var(--color-warm-white);
+  font-family: var(--font-display);
+  line-height: 0.98;
+}
+
+.packages__intro h3 {
+  font-size: clamp(2rem, 4vw, 4.1rem);
+}
+
+.packages__intro p {
+  margin: 1rem 0 0;
+  color: var(--color-muted);
+}
+
+.packages__grid {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.package-card {
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+  border: 1px solid rgba(246, 239, 225, 0.1);
+  border-radius: var(--radius-md);
+  background: rgba(246, 239, 225, 0.045);
+}
+
+.package-card span {
+  color: var(--color-gold-bright);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.package-card h4 {
+  margin-top: 0.55rem;
+  font-size: clamp(1.45rem, 2.5vw, 2rem);
+}
+
+.package-card p {
+  margin: 0.55rem 0 0;
+  color: var(--color-muted);
+}
+
+.package-card ul {
+  display: grid;
+  gap: 0.45rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.package-card li {
+  position: relative;
+  padding-left: 1rem;
+  color: var(--color-beige);
+}
+
+.package-card li::before {
+  position: absolute;
+  top: 0.72em;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  content: '';
+  border-radius: 50%;
+  background: var(--color-gold-bright);
+}
+
 @media (max-width: 1020px) {
   .services-section__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .packages {
+    grid-template-columns: 1fr;
+  }
+
+  .packages__intro {
+    position: static;
   }
 }
 
