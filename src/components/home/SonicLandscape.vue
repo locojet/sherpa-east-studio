@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import storyImage from '@/assets/images/lesungen-group.jpg'
+</script>
+
 <template>
   <section class="section section--tight sonic-landscape" aria-labelledby="sonic-landscape-title">
     <div class="container sonic-landscape__grid">
@@ -9,9 +13,14 @@
       <div
         class="sonic-landscape__art"
         data-reveal
-        aria-label="Abstrakter Berg aus Frequenzlinien für Klang und Film"
+        aria-label="Gruppe nach einer musikalisch begleiteten Lesung"
         role="img"
       >
+        <img
+          class="sonic-landscape__photo"
+          :src="storyImage"
+          alt="Gruppe nach einer musikalisch begleiteten Lesung"
+        />
         <svg viewBox="0 0 900 360" aria-hidden="true" focusable="false">
           <path
             d="M28 300 C160 264 212 224 302 244 C392 264 430 96 516 132 C592 164 632 48 728 86 C806 116 844 206 876 300"
@@ -62,17 +71,45 @@ h2 {
   position: relative;
   min-height: 360px;
   overflow: hidden;
-  border: 1px solid rgba(215, 181, 109, 0.18);
-  border-radius: var(--radius-md);
-  background: radial-gradient(circle at 45% 22%, rgba(215, 181, 109, 0.16), transparent 18rem),
-    linear-gradient(145deg, rgba(246, 239, 225, 0.05), rgba(246, 239, 225, 0.015));
+  border: 0;
+  border-radius: 0;
+  background: #050403;
+  box-shadow: var(--shadow-soft);
+}
+
+.sonic-landscape__art::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: linear-gradient(
+      90deg,
+      rgba(5, 4, 3, 0.18),
+      rgba(5, 4, 3, 0.02) 45%,
+      rgba(5, 4, 3, 0.34)
+    ),
+    linear-gradient(180deg, rgba(5, 4, 3, 0), rgba(5, 4, 3, 0.56));
+}
+
+.sonic-landscape__photo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  filter: var(--photo-grade);
+  object-fit: cover;
+  object-position: center 42%;
 }
 
 svg {
   position: absolute;
   inset: 0;
+  z-index: 1;
   width: 100%;
   height: 100%;
+  opacity: 0.78;
 }
 
 path {
@@ -88,6 +125,7 @@ path:nth-child(2n) {
 
 .sonic-landscape__bars {
   position: absolute;
+  z-index: 2;
   right: 28px;
   bottom: 28px;
   left: 28px;

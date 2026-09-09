@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import SectionHeading from '@/components/ui/SectionHeading.vue'
+import studioBassImage from '@/assets/images/studio-bass-detail.jpg'
+import studioDrumImage from '@/assets/images/studio-drum-room.jpg'
+import studioMainImage from '@/assets/images/studio-ferchio-session.jpg'
+import studioHeadphonesImage from '@/assets/images/studio-headphones-detail.jpg'
 
 const highlights = [
   'Dokumentationen',
@@ -13,6 +17,27 @@ const stats = [
   { value: '01', label: 'Zuhören, bevor Technik ins Spiel kommt' },
   { value: '02', label: 'Vertrauen als Grundlage jeder Produktion' },
   { value: '03', label: 'Inszenierung, die authentisch bleibt' },
+]
+
+const studioGallery = [
+  {
+    src: studioHeadphonesImage,
+    alt: 'Kopfhörer und Mikrofon im Aufnahmeraum',
+    label: 'Monitoring',
+    position: 'center 50%',
+  },
+  {
+    src: studioDrumImage,
+    alt: 'Schlagzeug, Mikrofone und Keyboard im Studio',
+    label: 'Recording Room',
+    position: 'center 44%',
+  },
+  {
+    src: studioBassImage,
+    alt: 'Bassgitarre während einer Aufnahme im Studio',
+    label: 'Instrumente',
+    position: 'center 50%',
+  },
 ]
 </script>
 
@@ -43,14 +68,21 @@ const stats = [
       <div class="studio-section__media" data-reveal>
         <div
           class="studio-section__image studio-section__image--main"
+          :style="{ '--about-image': `url(${studioMainImage})` }"
           role="img"
-          aria-label="Dokumentarischer Studioraum mit warmem Licht und Kameraarbeit"
+          aria-label="Ferchio arbeitet im Studio an einer Musikproduktion"
         ></div>
-        <div
-          class="studio-section__image studio-section__image--side"
-          role="img"
-          aria-label="Abstrakte Bergform aus Frequenzlinien"
-        ></div>
+      </div>
+
+      <div class="studio-section__gallery" data-reveal>
+        <figure
+          v-for="photo in studioGallery"
+          :key="photo.src"
+          class="studio-section__gallery-item"
+        >
+          <img :src="photo.src" :alt="photo.alt" :style="{ objectPosition: photo.position }" />
+          <figcaption>{{ photo.label }}</figcaption>
+        </figure>
       </div>
 
       <dl class="studio-section__stats" data-reveal>
@@ -122,8 +154,8 @@ blockquote {
 .studio-section__image {
   position: absolute;
   overflow: hidden;
-  border: 1px solid rgba(215, 181, 109, 0.22);
-  border-radius: var(--radius-md);
+  border: 0;
+  border-radius: 0;
   box-shadow: var(--shadow-soft);
 }
 
@@ -147,12 +179,78 @@ blockquote {
 }
 
 .studio-section__image--main {
-  inset: 0 0 70px 70px;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(5, 4, 3, 0.02), rgba(5, 4, 3, 0.52)),
+    linear-gradient(120deg, rgba(241, 215, 141, 0.16), transparent 34%),
+    var(--about-image) center / cover;
+  background-position: center 42%;
+  filter: var(--photo-grade);
 }
 
-.studio-section__image--side {
-  inset: auto 46% 0 0;
-  height: 250px;
+.studio-section__image--main::before {
+  background: linear-gradient(120deg, rgba(246, 239, 225, 0.08), transparent 35%),
+    radial-gradient(circle at 68% 28%, rgba(215, 181, 109, 0.1), transparent 15rem);
+  mix-blend-mode: screen;
+}
+
+.studio-section__image--main::after {
+  inset: 0;
+  border: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(5, 4, 3, 0.68));
+  transform: none;
+}
+
+.studio-section__gallery {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: rgba(246, 239, 225, 0.08);
+}
+
+.studio-section__gallery-item {
+  position: relative;
+  min-height: clamp(230px, 24vw, 360px);
+  margin: 0;
+  overflow: hidden;
+  background: #050403;
+}
+
+.studio-section__gallery-item img {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  filter: var(--photo-grade);
+  object-fit: cover;
+  transition:
+    filter 620ms var(--ease-out),
+    transform 620ms var(--ease-out);
+}
+
+.studio-section__gallery-item::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: linear-gradient(180deg, rgba(5, 4, 3, 0.02), rgba(5, 4, 3, 0.62));
+}
+
+.studio-section__gallery-item:hover img {
+  filter: var(--photo-grade-hover);
+  transform: scale(1.035);
+}
+
+.studio-section__gallery-item figcaption {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 1;
+  color: var(--color-gold-bright);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .studio-section__stats {
@@ -193,11 +291,15 @@ dd {
   }
 
   .studio-section__image--main {
-    inset: 0 0 60px 20px;
+    inset: 0;
   }
 
-  .studio-section__image--side {
-    inset: auto 28% 0 0;
+  .studio-section__gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .studio-section__gallery-item {
+    min-height: 310px;
   }
 }
 </style>

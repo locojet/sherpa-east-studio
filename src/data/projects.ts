@@ -50,12 +50,12 @@ export const projects: ProjectItem[] = [
   {
     id: 'lesungen',
     artist: 'Bernhard und Ferchio',
-    title: 'Lesungen',
+    title: 'Musikalische Begleitung bei Lesung',
     year: 'Live',
-    work: 'Probe / Stimme / musikalische Dichtung',
+    work: 'Lesung / Gitarre / musikalische Begleitung',
     description:
-      'Gemeinsame Proben, szenische Betonung und musikalische Ideen für Lesungen, in denen Text und Klang ein gemeinsames Tempo finden.',
-    imageAlt: 'Bühnenlicht, Mikrofon und abstrakte Textlinien für eine Lesung',
+      'Gemeinsame Vorbereitung und Live-Begleitung für Lesungen: Gitarre, Pausen und musikalische Akzente werden so gesetzt, dass Text und Klang ein gemeinsames Tempo finden.',
+    imageAlt: 'Ferchio begleitet eine Lesung mit Gitarre und gemeinsamer Bühnenarbeit',
     accent: '#f1d78d',
     trackId: 'altitude-session',
   },

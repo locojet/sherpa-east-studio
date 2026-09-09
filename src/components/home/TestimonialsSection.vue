@@ -1,6 +1,32 @@
 <script setup lang="ts">
 import { testimonials } from '@/data/testimonials'
+import bernhardImage from '@/assets/images/bernhard-portrait.jpg'
+import martineImage from '@/assets/images/martine-seibert-raken.webp'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
+
+const testimonialImages: Record<string, { src: string; position: string }> = {
+  bernhard: {
+    src: bernhardImage,
+    position: 'center 34%',
+  },
+  'martine-seibert-raken': {
+    src: martineImage,
+    position: 'center 24%',
+  },
+}
+
+function getTestimonialImageStyle(testimonialId: string) {
+  const image = testimonialImages[testimonialId]
+
+  if (!image) {
+    return undefined
+  }
+
+  return {
+    '--testimonial-image': `url(${image.src})`,
+    '--testimonial-position': image.position,
+  }
+}
 </script>
 
 <template>
@@ -17,8 +43,17 @@ import SectionHeading from '@/components/ui/SectionHeading.vue'
           v-for="testimonial in testimonials"
           :key="testimonial.id"
           class="testimonial-card"
+          :class="{
+            'testimonial-card--with-photo': Boolean(getTestimonialImageStyle(testimonial.id)),
+          }"
           data-reveal
         >
+          <div
+            v-if="getTestimonialImageStyle(testimonial.id)"
+            class="testimonial-card__image"
+            :style="getTestimonialImageStyle(testimonial.id)"
+            aria-hidden="true"
+          ></div>
           <p>{{ testimonial.quote }}</p>
           <footer>
             <strong>{{ testimonial.name }}</strong>
@@ -53,6 +88,34 @@ import SectionHeading from '@/components/ui/SectionHeading.vue'
   border-radius: var(--radius-md);
   background: linear-gradient(180deg, rgba(246, 239, 225, 0.06), rgba(246, 239, 225, 0.025));
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.18);
+}
+
+.testimonial-card--with-photo {
+  gap: 0;
+  align-content: start;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+}
+
+.testimonial-card__image {
+  min-height: 260px;
+  background: var(--testimonial-image) var(--testimonial-position) / cover;
+  filter: var(--photo-grade);
+}
+
+.testimonial-card--with-photo p,
+.testimonial-card--with-photo footer {
+  padding-inline: clamp(1.1rem, 3vw, 1.8rem);
+}
+
+.testimonial-card--with-photo p {
+  padding-top: clamp(1.1rem, 3vw, 1.8rem);
+}
+
+.testimonial-card--with-photo footer {
+  padding-bottom: clamp(1.1rem, 3vw, 1.8rem);
 }
 
 .testimonial-card p {

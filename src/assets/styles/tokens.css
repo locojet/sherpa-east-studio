@@ -28,4 +28,6 @@
   --radius-md: 8px;
   --shadow-soft: 0 28px 80px rgba(0, 0, 0, 0.36);
   --ease-out: cubic-bezier(0.19, 1, 0.22, 1);
+  --photo-grade: brightness(0.94) contrast(1.08) saturate(0.9) sepia(0.055);
+  --photo-grade-hover: brightness(0.99) contrast(1.12) saturate(0.95) sepia(0.035);
 }

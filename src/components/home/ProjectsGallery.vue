@@ -1,17 +1,56 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { projects } from '@/data/projects'
-import { tracks } from '@/data/tracks'
 import type { ProjectItem } from '@/types/content'
+import lesungenGuitarImage from '@/assets/images/lesungen-guitar.jpg'
+import martineImage from '@/assets/images/martine-seibert-raken.webp'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
+
+interface ProjectPhoto {
+  src: string
+  alt: string
+  position: string
+}
 
 const activeProject = ref<ProjectItem | null>(null)
 
-const activeTrack = computed(() =>
-  activeProject.value?.trackId
-    ? tracks.find((track) => track.id === activeProject.value?.trackId)
-    : undefined,
+const projectGalleries: Record<string, ProjectPhoto[]> = {
+  lesungen: [
+    {
+      src: lesungenGuitarImage,
+      alt: 'Ferchio begleitet eine Lesung mit Gitarre',
+      position: 'center 50%',
+    },
+  ],
+}
+
+const projectImages: Record<string, { src: string; position: string }> = {
+  'martine-seibert-raken-doku': {
+    src: martineImage,
+    position: 'center 28%',
+  },
+  lesungen: {
+    src: lesungenGuitarImage,
+    position: 'center 50%',
+  },
+}
+
+const activeProjectGallery = computed(() =>
+  activeProject.value ? (projectGalleries[activeProject.value.id] ?? []) : [],
 )
+
+function getProjectImageStyle(projectId: string) {
+  const image = projectImages[projectId]
+
+  if (!image) {
+    return undefined
+  }
+
+  return {
+    '--project-image': `url(${image.src})`,
+    '--project-position': image.position,
+  }
+}
 </script>
 
 <template>
@@ -20,7 +59,7 @@ const activeTrack = computed(() =>
       <SectionHeading
         eyebrow="Projekte"
         title="Arbeiten zwischen Klang, Kamera und Charakter"
-        copy="Aus dem Konzept übernommen: Dokumentationen, Albumproduktion, Imagefilm und Lesungen. Einige Projektdetails sind bewusst offen gehalten, bis echtes Bildmaterial und finale Freigaben vorliegen."
+        copy="Aus dem Konzept übernommen: Dokumentationen, Albumproduktion, Imagefilm und musikalische Begleitung bei Lesungen. Einige Projektdetails sind bewusst offen gehalten, bis echtes Bildmaterial und finale Freigaben vorliegen."
       />
 
       <div class="projects-section__grid">
@@ -31,7 +70,13 @@ const activeTrack = computed(() =>
           data-reveal
           :style="{ '--project-accent': project.accent }"
         >
-          <div class="project-card__image" :aria-label="project.imageAlt" role="img"></div>
+          <div
+            class="project-card__image"
+            :class="{ 'project-card__image--photo': Boolean(getProjectImageStyle(project.id)) }"
+            :style="getProjectImageStyle(project.id)"
+            :aria-label="project.imageAlt"
+            role="img"
+          ></div>
           <div class="project-card__content">
             <span>{{ project.year }} / {{ project.work }}</span>
             <h3>{{ project.title }}</h3>
@@ -69,9 +114,10 @@ const activeTrack = computed(() =>
           <h3 id="project-modal-title">{{ activeProject.title }}</h3>
           <p class="project-modal__artist">{{ activeProject.artist }}</p>
           <p>{{ activeProject.description }}</p>
-          <div v-if="activeTrack" class="project-modal__audio">
-            <strong>Audio-Skizze verfügbar</strong>
-            <span>{{ activeTrack.title }} - {{ activeTrack.artist }}</span>
+          <div v-if="activeProjectGallery.length" class="project-modal__gallery">
+            <figure v-for="photo in activeProjectGallery" :key="photo.src">
+              <img :src="photo.src" :alt="photo.alt" :style="{ objectPosition: photo.position }" />
+            </figure>
           </div>
         </article>
       </div>
@@ -98,8 +144,8 @@ const activeTrack = computed(() =>
   display: grid;
   min-height: 360px;
   overflow: hidden;
-  border: 1px solid rgba(246, 239, 225, 0.1);
-  border-radius: var(--radius-md);
+  border: 0;
+  border-radius: 0;
   background: #0a0908;
 }
 
@@ -118,7 +164,17 @@ const activeTrack = computed(() =>
     linear-gradient(135deg, rgba(246, 239, 225, 0.1), transparent 34%),
     repeating-linear-gradient(115deg, rgba(246, 239, 225, 0.06) 0 1px, transparent 1px 18px),
     linear-gradient(150deg, #2a251f, #060504);
-  transition: transform 520ms var(--ease-out);
+  transition:
+    filter 520ms var(--ease-out),
+    transform 520ms var(--ease-out);
+}
+
+.project-card__image--photo {
+  background:
+    linear-gradient(180deg, rgba(5, 4, 3, 0.05), rgba(5, 4, 3, 0.7)),
+    linear-gradient(120deg, rgba(241, 215, 141, 0.18), transparent 34%),
+    var(--project-image) var(--project-position) / cover;
+  filter: var(--photo-grade);
 }
 
 .project-card__image::after {
@@ -130,6 +186,10 @@ const activeTrack = computed(() =>
 
 .project-card:hover .project-card__image {
   transform: scale(1.04);
+}
+
+.project-card:hover .project-card__image--photo {
+  filter: var(--photo-grade-hover);
 }
 
 .project-card__content {
@@ -197,7 +257,9 @@ button {
 .project-modal__panel {
   position: relative;
   z-index: 1;
-  width: min(680px, 100%);
+  width: min(900px, 100%);
+  max-height: calc(100dvh - 40px);
+  overflow: auto;
   padding: clamp(1.3rem, 5vw, 3rem);
   border: 1px solid rgba(215, 181, 109, 0.25);
   border-radius: var(--radius-md);
@@ -221,14 +283,32 @@ button {
   color: var(--color-beige) !important;
 }
 
-.project-modal__audio {
+.project-modal__gallery {
   display: grid;
-  gap: 0.25rem;
-  margin-top: 1.6rem;
-  padding: 1rem;
-  border: 1px solid rgba(246, 239, 225, 0.1);
-  border-radius: var(--radius-sm);
-  background: rgba(246, 239, 225, 0.04);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin-top: 1.4rem;
+}
+
+.project-modal__gallery:has(figure:only-child) {
+  grid-template-columns: 1fr;
+}
+
+.project-modal__gallery figure {
+  min-height: clamp(210px, 26vw, 320px);
+  margin: 0;
+  overflow: hidden;
+  background: #050403;
+}
+
+.project-modal__gallery img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  filter: var(--photo-grade);
+  object-fit: cover;
 }
 
 @media (max-width: 840px) {
@@ -238,6 +318,10 @@ button {
 
   .project-card:first-child {
     grid-row: auto;
+  }
+
+  .project-modal__gallery {
+    grid-template-columns: 1fr;
   }
 }
 </style>

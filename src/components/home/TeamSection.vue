@@ -1,6 +1,35 @@
 <script setup lang="ts">
 import { team } from '@/data/team'
+import ferchioPortrait from '@/assets/images/ferchio-portrait.jpg'
+import revolutionRehearsal from '@/assets/images/revolution-rehearsal.jpg'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
+
+const portraitImages: Record<string, { src: string; position: string; mobilePosition: string }> = {
+  ferchio: {
+    src: ferchioPortrait,
+    position: 'center 34%',
+    mobilePosition: 'center 28%',
+  },
+  revolution: {
+    src: revolutionRehearsal,
+    position: 'center 45%',
+    mobilePosition: 'center 48%',
+  },
+}
+
+function getPortraitStyle(memberId: string) {
+  const portrait = portraitImages[memberId]
+
+  if (!portrait) {
+    return undefined
+  }
+
+  return {
+    '--portrait-image': `url(${portrait.src})`,
+    '--portrait-position': portrait.position,
+    '--portrait-mobile-position': portrait.mobilePosition,
+  }
+}
 </script>
 
 <template>
@@ -14,7 +43,13 @@ import SectionHeading from '@/components/ui/SectionHeading.vue'
 
       <div class="team-section__grid">
         <article v-for="member in team" :key="member.id" class="team-card" data-reveal>
-          <div class="team-card__portrait" :aria-label="member.imageAlt" role="img"></div>
+          <div
+            class="team-card__portrait"
+            :class="{ 'team-card__portrait--photo': Boolean(getPortraitStyle(member.id)) }"
+            :style="getPortraitStyle(member.id)"
+            :aria-label="member.imageAlt"
+            role="img"
+          ></div>
           <div>
             <p>{{ member.role }}</p>
             <h3>{{ member.name }}</h3>
@@ -49,13 +84,33 @@ import SectionHeading from '@/components/ui/SectionHeading.vue'
 }
 
 .team-card__portrait {
+  position: relative;
   min-height: 340px;
   overflow: hidden;
-  border-radius: var(--radius-sm);
+  border-radius: 0;
   background: radial-gradient(circle at 50% 24%, rgba(215, 181, 109, 0.22), transparent 11rem),
     linear-gradient(160deg, rgba(246, 239, 225, 0.12), transparent 38%),
     repeating-linear-gradient(90deg, rgba(246, 239, 225, 0.06) 0 1px, transparent 1px 28px),
     linear-gradient(150deg, #29231c, #080706);
+}
+
+.team-card__portrait--photo {
+  min-height: 390px;
+  background:
+    linear-gradient(180deg, rgba(5, 4, 3, 0.02), rgba(5, 4, 3, 0.32)),
+    var(--portrait-image) var(--portrait-position) / cover;
+  filter: var(--photo-grade);
+  transition:
+    filter 520ms var(--ease-out),
+    transform 520ms var(--ease-out);
+}
+
+.team-card__portrait--photo::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: linear-gradient(180deg, transparent 55%, rgba(5, 4, 3, 0.68));
+  pointer-events: none;
 }
 
 .team-card:nth-child(2) .team-card__portrait {
@@ -70,6 +125,10 @@ import SectionHeading from '@/components/ui/SectionHeading.vue'
     linear-gradient(160deg, rgba(246, 239, 225, 0.1), transparent 38%),
     repeating-linear-gradient(115deg, rgba(246, 239, 225, 0.06) 0 1px, transparent 1px 26px),
     linear-gradient(150deg, #201c18, #070605);
+}
+
+.team-card:hover .team-card__portrait--photo {
+  filter: var(--photo-grade-hover);
 }
 
 p,
@@ -108,6 +167,11 @@ h3 {
 
   .team-card__portrait {
     min-height: 260px;
+  }
+
+  .team-card__portrait--photo {
+    min-height: 360px;
+    background-position: var(--portrait-mobile-position);
   }
 }
 </style>
